@@ -30,7 +30,7 @@ def _build_ffmpeg_args(
         "-hwaccel_output_format",
         "vaapi",
         "-vaapi_device",
-        "/dev/dri/renderD128"
+        "/dev/dri/renderD128",
         "-y",
         "-i",
         f"file:{src_path}",
