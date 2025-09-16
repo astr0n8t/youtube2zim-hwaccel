@@ -7,7 +7,7 @@ from zimscraperlib.image.conversion import convert_image
 from zimscraperlib.image.optimization import OptimizeWebpOptions, optimize_webp
 from zimscraperlib.image.probing import format_for
 from zimscraperlib.image.transformation import resize_image
-from zimscraperlib.video.encoding import reencode
+from youtube2zim.hw_encoding import reencode
 
 from youtube2zim.constants import logger
 
@@ -70,4 +70,5 @@ def post_process_video(video_dir, video_id, preset, video_format):
     if not success:
         if process:
             logger.error(process.stdout)
-        raise Exception(f"Exception while re-encoding {src_path} for {video_id}")
+        raise Exception(
+            f"Exception while re-encoding {src_path} for {video_id}")

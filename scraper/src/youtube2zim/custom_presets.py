@@ -16,9 +16,6 @@ class VideoWebmHigh(Config):
     mimetype = f"{preset_type}/webm"
 
     options: ClassVar[dict[str, str | None]] = {
-        "-hwaccel": "vaapi",
-        "-hwaccel_output_format": "vaapi",
-        "-vaapi_device": "/dev/dri/renderD128",
         "-codec:v": "vp9_vaapi",  # video codec
         "-b:v": "340k",  # Adjust quantizer within min/max to target this bitrate
         "-qmin": "26",  # Reduce the bitrate on very still videos
