@@ -36,7 +36,7 @@ from zimscraperlib.video.presets import (
     VideoWebmHigh,
     VideoWebmLow,
 )
-from custom_presets import VideoWebmHigh as VideoWebmHighHW
+from youtube2zim.custom_presets import VideoWebmHigh as VideoWebmHighHW
 from zimscraperlib.zim import Creator, metadata
 from zimscraperlib.zim.filesystem import validate_file_creatable
 from zimscraperlib.zim.indexing import IndexData
