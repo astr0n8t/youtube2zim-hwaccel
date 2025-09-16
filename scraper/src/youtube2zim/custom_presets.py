@@ -16,8 +16,8 @@ class VideoWebmHigh(Config):
     mimetype = f"{preset_type}/webm"
 
     options: ClassVar[dict[str, str | None]] = {
+        "-vf": "'hwupload'",
         "-codec:v": "vp9_vaapi",  # video codec
-        "-b:v": "340k",  # Adjust quantizer within min/max to target this bitrate
         "-qmin": "26",  # Reduce the bitrate on very still videos
         "-qmax": "54",  # Increase the bitrate on very busy videos
         "-g": "240",  # Number of frames allowed between keyframes
