@@ -23,7 +23,7 @@ RUN apt-get update \
 RUN sed -i -e's/ main/ main contrib non-free/g' /etc/apt/sources.list.d/debian.sources && \
   apt-get update \
   && apt-get install -y --no-install-recommends \
-  intel-media-va-driver-non-free mesa-va-drivers libgl1-mesa-glx libgl1-mesa-dri
+  intel-media-va-driver-non-free vainfo
 
 # Custom entrypoint
 COPY scraper/entrypoint.sh /usr/local/bin/entrypoint.sh
