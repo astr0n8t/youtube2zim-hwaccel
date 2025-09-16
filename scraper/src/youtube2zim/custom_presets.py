@@ -16,7 +16,7 @@ class VideoWebmHigh(Config):
     mimetype = f"{preset_type}/webm"
 
     options: ClassVar[dict[str, str | None]] = {
-        "-vf": "format=nv12,hwupload,scale_vaapi=w=1280:h=720",
+        "-vf": "scale_vaapi=format=nv12",
         "-codec:v": "vp9_vaapi",  # video codec
         "-codec:a": "libvorbis",  # audio codec
         "-b:a": "48k",  # target audio bitrate
