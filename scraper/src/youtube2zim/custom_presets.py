@@ -16,15 +16,11 @@ class VideoWebmHigh(Config):
     mimetype = f"{preset_type}/webm"
 
     options: ClassVar[dict[str, str | None]] = {
-        "-vf": "format=vaapi,hwupload,scale_vaapi=w=1920:h=1080",
+        "-vf": "format=vaapi,hwupload",
         "-codec:v": "vp9_vaapi",  # video codec
-        "-b:v": "340k",  # Adjust quantizer within min/max to target this bitrate
-        "-qmin": "26",  # Reduce the bitrate on very still videos
-        "-qmax": "54",  # Increase the bitrate on very busy videos
-        "-g": "240",  # Number of frames allowed between keyframes
-        "-quality": "good",  # codec preset
-        # Encoding speed (compromise between quality and encoding time)
-        "-speed": "1",
+        "-global_quality": "50",
+        "-bf": "4",
+        "-bsf:v": "vp9_raw_reorder,vp9_superframe",
         "-codec:a": "libvorbis",  # audio codec
         "-b:a": "48k",  # target audio bitrate
         "-ar": "44100",  # audio sampling rate
