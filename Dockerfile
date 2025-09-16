@@ -10,14 +10,15 @@ LABEL org.opencontainers.image.source https://github.com/openzim/youtube
 
 # Install necessary packages
 RUN apt-get update \
-     && apt-get install -y --no-install-recommends \
-     wget \
-     unzip \
-     ffmpeg \
-     aria2 \
-     && rm -rf /var/lib/apt/lists/* \
-     && python -m pip install --no-cache-dir -U \
-     pip
+  && apt-get install -y --no-install-recommends \
+  wget \
+  unzip \
+  ffmpeg \
+  aria2 \
+  ffmpeg mesa-va-drivers libgl1-mesa-glx libgl1-mesa-dri \
+  && rm -rf /var/lib/apt/lists/* \
+  && python -m pip install --no-cache-dir -U \
+  pip
 
 # Custom entrypoint
 COPY scraper/entrypoint.sh /usr/local/bin/entrypoint.sh
@@ -39,7 +40,7 @@ COPY *.md LICENSE CHANGELOG.md /src/
 
 # Install + cleanup
 RUN pip install --no-cache-dir /src/scraper \
- && rm -rf /src/scraper
+  && rm -rf /src/scraper
 
 # Copy zimui build output
 COPY --from=zimui /src/dist /src/zimui
