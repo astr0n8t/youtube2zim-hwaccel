@@ -18,9 +18,6 @@ class VideoWebmHigh(Config):
     options: ClassVar[dict[str, str | None]] = {
         "-vf": "format=nv12,hwupload",
         "-codec:v": "vp9_vaapi",  # video codec
-        "-global_quality": "50",
-        "-bf": "4",
-        "-bsf:v": "vp9_raw_reorder,vp9_superframe",
         "-codec:a": "libvorbis",  # audio codec
         "-b:a": "48k",  # target audio bitrate
         "-ar": "44100",  # audio sampling rate
