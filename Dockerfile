@@ -15,7 +15,7 @@ RUN apt-get update \
   unzip \
   ffmpeg \
   aria2 \
-  ffmpeg mesa-va-drivers libgl1-mesa-glx libgl1-mesa-dri \
+  ffmpeg intel-media-va-driver-non-free mesa-va-drivers libgl1-mesa-glx libgl1-mesa-dri \
   && rm -rf /var/lib/apt/lists/* \
   && python -m pip install --no-cache-dir -U \
   pip
