@@ -9,7 +9,7 @@ FROM python:3.13-bookworm
 LABEL org.opencontainers.image.source https://github.com/openzim/youtube
 
 # Install necessary packages
-RUN apt-get update \
+RUN sed -i -e's/ main/ main contrib non-free/g' /etc/apt/sources.list && apt-get update \
   && apt-get install -y --no-install-recommends \
   wget \
   unzip \
