@@ -9,19 +9,25 @@ FROM python:3.13-bookworm
 LABEL org.opencontainers.image.source https://github.com/openzim/youtube
 
 # Install necessary packages
-RUN sed -i -e's/ main/ main contrib non-free/g' /etc/apt/sources.list && apt-get update \
+RUN apt-get update \
   && apt-get install -y --no-install-recommends \
   wget \
   unzip \
   ffmpeg \
   aria2 \
-  ffmpeg intel-media-va-driver-non-free mesa-va-drivers libgl1-mesa-glx libgl1-mesa-dri \
+  ffmpeg \
   && rm -rf /var/lib/apt/lists/* \
   && python -m pip install --no-cache-dir -U \
   pip
 
-# Custom entrypoint
-COPY scraper/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN sed -i -e's/ main/ main contrib non-free/g' /etc/apt/sources.list && \
+  apt-get update \
+  && apt-get install -y --no-install-recommends \
+  intel-media-va-driver-non-free mesa-va-drivers libgl1-mesa-glx libgl1-mesa-dri \
+
+
+  # Custom entrypoint
+  COPY scraper/entrypoint.sh /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 RUN mkdir -p /output
 WORKDIR /output
