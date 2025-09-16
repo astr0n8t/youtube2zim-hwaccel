@@ -46,8 +46,8 @@ class VideoMp4Low(Config):
     mimetype = f"{preset_type}/mp4"
 
     options: ClassVar[dict[str, str | None]] = {
-        "-vf": "format=nv12|vaapi,hwupload",
-        "-codec:v": "h264_vaapi",  # video codec
+        "-vf": "format=nv12",
+        "-codec:v": "h264_qsv",  # video codec
         "-b:v": "300k",  # target video bitrate
         "-maxrate": "300k",  # max video bitrate
         "-minrate": "300k",  # min video bitrate
