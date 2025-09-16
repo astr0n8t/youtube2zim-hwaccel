@@ -37,6 +37,7 @@ from zimscraperlib.video.presets import (
     VideoWebmLow,
 )
 from youtube2zim.custom_presets import VideoWebmHigh as VideoWebmHighHW
+from youtube2zim.custom_presets import VideoMp4Low as VideoMp4LowHW
 from zimscraperlib.zim import Creator, metadata
 from zimscraperlib.zim.filesystem import validate_file_creatable
 from zimscraperlib.zim.indexing import IndexData
@@ -722,7 +723,7 @@ class Youtube2Zim:
         """download the video from cache/youtube and return True if successful"""
 
         preset = {
-            "mp4": VideoMp4Low if self.low_quality else VideoMp4High,
+            "mp4": VideoMp4LowHW if self.low_quality else VideoMp4High,
             "webm": VideoWebmLow if self.low_quality else VideoWebmHighHW,
         }.get(self.video_format)
         if not preset:
