@@ -60,9 +60,6 @@ def post_process_video(video_dir, video_id, preset, video_format):
 
     dst_path = src_path.with_name(f"video.{video_format}")
     logger.info(f"Reencode video to {dst_path}")
-    print(preset.to_ffmpeg_args())
-    import sys
-    sys.exit()
     success, process = reencode(
         src_path,
         dst_path,
