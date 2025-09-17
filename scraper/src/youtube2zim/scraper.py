@@ -409,8 +409,8 @@ class Youtube2Zim:
             self.zim_file.finish()
         finally:
             self.report_progress()
-            logger.info("removing temp folder")
-            shutil.rmtree(self.build_dir, ignore_errors=True)
+            # logger.info("removing temp folder")
+            # shutil.rmtree(self.build_dir, ignore_errors=True)
 
         logger.info("all done!")
 
