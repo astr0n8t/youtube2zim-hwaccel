@@ -16,7 +16,7 @@ class VideoWebmHigh(Config):
     mimetype = f"{preset_type}/webm"
 
     options: ClassVar[dict[str, str | None]] = {
-        "-vf": "format=qsv,hwupload=extra_hw_frames=64",
+        "-vf": "format=qsv,hwupload=extra_hw_frames=64,scale_qsv=w=1280:h=720",
         "-codec:v": "vp9_qsv",  # video codec
         "-b:v": "340k",  # Adjust quantizer within min/max to target this bitrate
         "-qmin": "26",  # Reduce the bitrate on very still videos
@@ -46,7 +46,7 @@ class VideoMp4Low(Config):
     mimetype = f"{preset_type}/mp4"
 
     options: ClassVar[dict[str, str | None]] = {
-        "-vf": "format=qsv,hwupload=extra_hw_frames=64",
+        "-vf": "format=qsv,hwupload=extra_hw_frames=64,scale_qsv=w=1280:h=720",
         "-codec:v": "h264_qsv",  # video codec
         "-b:v": "300k",  # target video bitrate
         "-maxrate": "300k",  # max video bitrate
