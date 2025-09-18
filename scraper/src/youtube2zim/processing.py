@@ -7,7 +7,7 @@ from zimscraperlib.image.conversion import convert_image
 from zimscraperlib.image.optimization import OptimizeWebpOptions, optimize_webp
 from zimscraperlib.image.probing import format_for
 from zimscraperlib.image.transformation import resize_image
-from youtube2zim.hw_encoding import reencode
+from zimscraperlib.video.encoding import reencode
 
 from youtube2zim.constants import logger
 
