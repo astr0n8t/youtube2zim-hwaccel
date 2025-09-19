@@ -984,13 +984,14 @@ class Youtube2Zim:
         failed = []
         for video_id in videos_ids:
             run_pending()
-            if self.download_video(video_id, options) and self.download_thumbnail(
-                video_id, options
-            ):
-                self.download_subtitles(video_id, options)
-                self.generate_chapters_vtt(video_id)
-                succeeded.append(video_id)
-            else:
+            try:
+                if self.download_video(video_id, options) and self.download_thumbnail(
+                    video_id, options
+                ):
+                    self.download_subtitles(video_id, options)
+                    self.generate_chapters_vtt(video_id)
+                    succeeded.append(video_id)
+            except:
                 failed.append(video_id)
             self.videos_processed += 1
         return succeeded, failed
