@@ -7,7 +7,8 @@ from zimscraperlib.image.conversion import convert_image
 from zimscraperlib.image.optimization import OptimizeWebpOptions, optimize_webp
 from zimscraperlib.image.probing import format_for
 from zimscraperlib.image.transformation import resize_image
-from youtube2zim.hw_encoding import reencode
+from youtube2zim.hw_encoding import reencode as hw_reencode
+from zimscraperlib.video.encoding import reencode
 
 from youtube2zim.constants import logger
 
@@ -34,7 +35,7 @@ def process_thumbnail(thumbnail_path: pathlib.Path, options: OptimizeWebpOptions
     optimize_webp(thumbnail_path, thumbnail_path, options)
 
 
-def post_process_video(video_dir, video_id, preset, video_format):
+def post_process_video(video_dir, video_id, preset, video_format, hw_encoding=False):
     """apply custom post-processing to downloaded video
 
     - resize thumbnail
@@ -61,13 +62,22 @@ def post_process_video(video_dir, video_id, preset, video_format):
 
     dst_path = src_path.with_name(f"video.{video_format}")
     logger.info(f"Reencode video to {dst_path}")
-    success, process = reencode(
-        src_path,
-        dst_path,
-        preset.to_ffmpeg_args(),
-        delete_src=True,
-        failsafe=True,
-    )  # pyright: ignore[reportGeneralTypeIssues]
+    if hw_encoding:
+        success, process = hw_reencode(
+            src_path,
+            dst_path,
+            preset.to_ffmpeg_args(),
+            delete_src=True,
+            failsafe=True,
+        )  # pyright: ignore[reportGeneralTypeIssues]
+    else:
+        success, process = reencode(
+            src_path,
+            dst_path,
+            preset.to_ffmpeg_args(),
+            delete_src=True,
+            failsafe=True,
+        )  # pyright: ignore[reportGeneralTypeIssues]
     if not success:
         if process:
             logger.error(process.stdout)

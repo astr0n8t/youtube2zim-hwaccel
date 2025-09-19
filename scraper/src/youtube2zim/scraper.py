@@ -722,13 +722,19 @@ class Youtube2Zim:
         logger.info(f"uploaded {video_path} to cache at {key}")
         return True
 
-    def download_video(self, video_id, options):
+    def download_video(self, video_id, options, hw_accel=False):
         """download the video from cache/youtube and return True if successful"""
 
-        preset = {
-            "mp4": VideoMp4LowHW if self.low_quality else VideoMp4High,
-            "webm": VideoWebmLow if self.low_quality else VideoWebmHighHW,
-        }.get(self.video_format)
+        if hw_accel:
+            preset = {
+                "mp4": VideoMp4LowHW if self.low_quality else VideoMp4High,
+                "webm": VideoWebmLow if self.low_quality else VideoWebmHighHW,
+            }.get(self.video_format)
+        else:
+            preset = {
+                "mp4": VideoMp4Low if self.low_quality else VideoMp4High,
+                "webm": VideoWebmLow if self.low_quality else VideoWebmHigh,
+            }.get(self.video_format)
         if not preset:
             raise Exception(
                 f"Impossible to find preset for {
@@ -775,6 +781,7 @@ class Youtube2Zim:
                 video_id,
                 preset,
                 self.video_format,
+                hw_encoding=hw_accel
             )
             self.add_file_to_zim(
                 zim_path,
@@ -990,16 +997,24 @@ class Youtube2Zim:
         for video_id in videos_ids:
             run_pending()
             try:
-                if self.download_video(video_id, options) and self.download_thumbnail(
+                if self.download_video(video_id, options, hw_accel=True) and self.download_thumbnail(
                     video_id, options
                 ):
                     self.download_subtitles(video_id, options)
                     self.generate_chapters_vtt(video_id)
                     succeeded.append(video_id)
-            except Exception as e:
-                print("Error: ", e)
-                failed.append(video_id)
+            except Exception:
                 time.sleep(60)
+                try:
+                    if self.download_video(video_id, options) and self.download_thumbnail(
+                        video_id, options
+                    ):
+                        self.download_subtitles(video_id, options)
+                        self.generate_chapters_vtt(video_id)
+                    succeeded.append(video_id)
+                except Exception:
+                    failed.append(video_id)
+                    time.sleep(60)
             self.videos_processed += 1
         return succeeded, failed
 
