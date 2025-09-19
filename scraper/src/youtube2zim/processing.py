@@ -46,6 +46,7 @@ def post_process_video(video_dir, video_id, preset, video_format):
         for p in video_dir.iterdir()
         if p.stem == "video" and p.suffix not in (".jpg", ".webp")
     ]
+    print(files)
 
     if len(files) == 0:
         logger.error(f"Video file missing in {video_dir} for {video_id}")
