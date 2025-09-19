@@ -117,6 +117,7 @@ class Youtube2Zim:
         banner_image=None,
         main_color=None,
         secondary_color=None,
+        cookie_filename=None,
     ):
         # data-retrieval info
         self.youtube_id = youtube_id
@@ -144,6 +145,7 @@ class Youtube2Zim:
         self.main_color = main_color
         self.secondary_color = secondary_color
         self.disable_metadata_checks = disable_metadata_checks
+        self.cookie_filename = cookie_filename
 
         metadata.APPLY_RECOMMENDATIONS = not self.disable_metadata_checks
 
@@ -763,6 +765,8 @@ class Youtube2Zim:
                     "writeautomaticsub": False,
                 }
             )
+            if self.cookie_filename:
+                options_copy['cookiefile'] = self.cookie_filename
             with yt_dlp.YoutubeDL(options_copy) as ydl:
                 ydl.download([video_id])
             post_process_video(

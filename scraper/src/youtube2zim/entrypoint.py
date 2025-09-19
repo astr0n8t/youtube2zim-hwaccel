@@ -201,13 +201,19 @@ def main():
         help="Path to store the progress JSON file to.",
         dest="stats_filename",
     )
+    parser.add_argument(
+        "--cookie-filename",
+        help="Path to cookie file for ytdlp.",
+        dest="cookie_filename",
+    )
 
     args = parser.parse_args()
     logger.setLevel(logging.DEBUG if args.debug else logging.INFO)
 
     try:
         if args.max_concurrency < 1:
-            raise ValueError(f"Invalid concurrency value: {args.max_concurrency}")
+            raise ValueError(f"Invalid concurrency value: {
+                             args.max_concurrency}")
         scraper = Youtube2Zim(
             **{
                 key: value
