@@ -9,6 +9,7 @@ Create credentials (Other non-UI, Public Data)
 
 import concurrent.futures
 import datetime
+import time
 import functools
 import json
 import re
@@ -995,8 +996,10 @@ class Youtube2Zim:
                     self.download_subtitles(video_id, options)
                     self.generate_chapters_vtt(video_id)
                     succeeded.append(video_id)
-            except:
+            except Exception as e:
+                print("Error: ", e)
                 failed.append(video_id)
+                time.sleep(60)
             self.videos_processed += 1
         return succeeded, failed
 
