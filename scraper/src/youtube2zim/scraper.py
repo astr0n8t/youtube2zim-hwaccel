@@ -1003,7 +1003,8 @@ class Youtube2Zim:
                     self.download_subtitles(video_id, options)
                     self.generate_chapters_vtt(video_id)
                     succeeded.append(video_id)
-            except Exception:
+            except Exception as e:
+                print("Error re-trying in software:", e)
                 time.sleep(60)
                 try:
                     if self.download_video(video_id, options) and self.download_thumbnail(
@@ -1012,7 +1013,8 @@ class Youtube2Zim:
                         self.download_subtitles(video_id, options)
                         self.generate_chapters_vtt(video_id)
                     succeeded.append(video_id)
-                except Exception:
+                except Exception as f:
+                    print("Error:", f)
                     failed.append(video_id)
                     time.sleep(60)
             self.videos_processed += 1
