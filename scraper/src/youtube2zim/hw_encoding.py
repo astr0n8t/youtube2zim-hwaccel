@@ -25,6 +25,8 @@ def _build_ffmpeg_args(
     args = [
         "/usr/bin/env",
         "ffmpeg",
+        "-fflags",
+        "+genpts",
         "-init_hw_device",
         "qsv=hw",
         "-filter_hw_device",
